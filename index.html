@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script>
+/* =====================================================================
+   EDIT PANEL: change your words here. This is the ONLY part you need to touch.
+   HOW TO EDIT
+   1. Change only the text between the "double quotes". Apostrophes (I've) are fine.
+   2. Do not put a straight double quote or a backslash inside your text.
+   3. Keep every comma, bracket and curly brace exactly where it is.
+   4. Anything in [square brackets] is a placeholder waiting for your real info.
+   5. Save, then open the file in your browser (needs internet for the 3D room).
+   ===================================================================== */
+const CONTENT = {
+
+  // ---------- ABOUT YOU (hero + footer) ----------
+  name: "Arshveen Kaur",
+  initials: "AK",                                   // shown in the circle
+  university: "MBA · IMT Hyderabad",
+  intro: "I like patterns, puzzles, and making sense of messy information. This site is where I collect what I am learning, what I am building, and the thinking behind both. It is a work in progress, like me.",
+  typing: ["financial fundamentals", "building projects", "case competitions", "learning by doing"],  // rotating words after "I'm into"
+  chips: ["MBA", "IMT Hyderabad", "Exploring Finance"],   // 3 floating tags around your circle
+  email: "akaur@imthyderabad.edu.in",
+  linkedin: "https://www.linkedin.com/in/arshveen-kaur/",
+  resume: "#",                                      // paste a Google Drive share link here
+  footerNote: "The market ticker in the room is illustrative",
+
+  // ---------- BALANCE SHEET ----------
+  // Top row of small cards: ["number", "label"]. Use stats: [] to hide the row.
+  stats: [
+    ["9.25", "CGPA"],
+    ["1", "Internship"],
+    ["2", "Finance courses"],
+    ["5", "Books this year"]
+  ],
+  balanceSheet: {
+    asOf: "MBA, IMT Hyderabad · As of October 2026",
+    note: "A personal balance sheet built the way a company would. Assets are what I can use today. Liabilities are what I have committed to learning and have not finished yet. Figures are illustrative.",
+    // Each line: n = name, t = small tag on the right, d = optional fun line under the name,
+    //   wip: 1 = tag becomes an amber "in progress" pill,
+    //   go: "cases" or "certs" = clicking the line opens that section.
+    // To add a line, copy one { ... } row. To add a heading, copy a whole { group: ..., items: [...] } block.
+    assets: [
+      { group: "Current assets", items: [
+        { n: "Stocks", t: "Learning by holding", d: "Direct equity in a few Indian companies, held to learn how businesses and prices behave." },
+        { n: "SIPs", t: "Built over time", d: "Index fund SIPs, running monthly since January 2025." }
+      ] },
+      { group: "Fixed assets", items: [
+        { n: "Laptop", t: "Daily tool", d: "Where my coursework, spreadsheets and research live." },
+        { n: "Beads Sutra: Business Owner", t: "1+ year", d: "Handmade keychains, jewellery boxes and wallets. My first finance classroom: pricing, costs, sourcing." }
+      ] },
+      { group: "Intangible assets", items: [
+        { n: "Excel", t: "Used in projects", d: "Pricing sheets and budget trackers. First financial model: coming soon." },
+        { n: "Case competitions", go: "cases" },
+        { n: "Certifications", go: "certs" },
+        { n: "Curiosity & consistency", d: "Over a year of consistent building and learning." },
+        { n: "Proactiveness", d: "Started a business first and learned the finance behind it along the way." }
+      ] }
+    ],
+    liabilities: [
+      { group: "Short-term", items: [
+        { n: "Live market track record", t: "10% done", wip: 1, d: "A small real portfolio, built to learn by doing. Just getting started." },
+        { n: "Bloomberg financial fundamentals", t: "70% done", wip: 1, d: "Nearly complete. Expected by month-end." },
+        { n: "Tableau", t: "12% done", wip: 1, d: "Early stage. Goal: a stock performance dashboard." }
+      ] }
+    ],
+    equityTitle: "Capital built so far",
+    equityText: "Assets minus liabilities. Right now that is a solid base, a few commitments underway, and a habit of finishing what I start. This updates as liabilities convert into assets.",
+    notes: [
+      ["Skills", "Each skill listed links to a project or write-up where it is used."],
+      ["Depreciation", "Skills lose value when unused, so I keep them current by applying them in projects."],
+      ["Conversion", "When a liability is completed, it moves to assets. The Bloomberg course moves over once the certificate is earned."],
+      ["Basis of figures", "Amounts are left out on purpose. The categories show the thinking."]
+    ],
+    footer: "Next update: when the first liability becomes an asset."
+  },
+
+  // ---------- CASE COMPETITIONS (add or delete blocks as needed) ----------
+  caseComps: [
+    { name: "Tata Imagination Challenge 2026", org: "Tata Group", badge: "Reached Round 3", desc: "Progressed to the third round, where I submitted my idea." },
+    { name: "Dr Reddy's 3.0 (Management Track)", org: "Dr Reddy's Lab Ltd", badge: "Participant", desc: "Participated in the management track of the competition." },
+    { name: "Inkling 2026", org: "IIM Ranchi", badge: "Participant", desc: "Participated in the competition hosted by IIM Ranchi." }
+  ],
+
+  // ---------- CERTIFICATES: [name, issuer, year]. Start the year text with "In progress" for unfinished ones ----------
+  certificates: [
+    ["Bloomberg Financial Fundamentals", "Bloomberg", "In Progress · expected by end of this month"],
+    ["TiE Young Entrepreneurs", "IIT Kanpur", "2020"]
+  ],
+
+  // ---------- THE ROOM ----------
+  // Bookshelf: [title, one-line takeaway]. Maximum 6 books (3 per shelf).
+  books: [
+    ["The Intelligent Investor (Benjamin Graham)", "Protect your capital through a margin of safety and disciplined value investing."],
+    ["The Silent Patient (Alex Michaelides)", "Unresolved trauma and hidden guilt can shatter reality and distort human behavior."],
+    ["Rich Dad Poor Dad (Robert T. Kiyosaki)", "Acquire income-generating assets instead of liabilities to make money work for you."],
+    ["The Alchemist (Paulo Coelho)", "Courageously pursue your personal legend and listen to the wisdom of your heart."],
+    ["The Kite Runner (Khaled Hosseini)", "Redemption and forgiveness are possible if you are willing to face your past."]
+  ],
+
+  // Laptop: projects. t = title, s = tools, d = description
+  projects: [
+    { t: "Cost & Price Sheet: Beads Sutra", s: "Excel", d: "Figuring out what each handmade piece really costs, and what to charge." },
+    { t: "Personal Budget Tracker", s: "Excel", d: "Money in, money out, no surprises." },
+    { t: "Bloomberg Financial Fundamentals", s: "Certificate in progress · 70%", d: "Finishing by the end of this month." }
+  ],
+
+  // Goals board: [goal, done?]  (1 = already done, 0 = not yet)
+  goals: [
+    ["Do NISM certifications", 0],
+    ["Land a finance internship", 0],
+    ["Win a case competition", 0],
+    ["Build a DCF model", 0]
+  ],
+  boardNotes: ["NISM", "Intern 2027", "DCF", "Win a case", "Scale Business"],   // 5 short words on the cork board sticky notes
+
+  // Dustbin: your crumpled old plan
+  oldPlan: {
+    year: "2021",
+    plan: "Do CA Inter",
+    change: "Cleared CA Foundation, realised I wanted a broader path, so I changed direction."
+  },
+
+  // Piggy bank (amounts in rupees)
+  piggy: { title: "Savings goal", note: "Saving for a bike, and for a future IPO application.", saved: 18000, goal: 500000 },
+
+  // Window
+  windowNote: "Hyderabad at night, thinking through the next idea."
+};
+</script>
+<!-- ======= END OF EDIT PANEL. Everything below is layout and animation code. ======= -->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arshveen Kaur | Finance Portfolio</title>
+<meta name="description" content="Portfolio of Arshveen Kaur, MBA student at IMT Hyderabad: a personal balance sheet, case competitions, certifications and projects.">
+<meta name="theme-color" content="#090d18">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#080b16;--card:rgba(255,255,255,.04);--line:rgba(255,255,255,.09);--text:#e8ecf5;--muted:#8d97b3;--accent:#5eead4;--warn:#fb923c;--gold:#fbbf24}
+html{scroll-behavior:smooth;scroll-padding-top:70px}*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,#16204a55,transparent),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:5;backdrop-filter:blur(14px);background:#080b16cc;border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:22px;padding:14px 20px;font-size:14px;overflow-x:auto;white-space:nowrap}
+nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--accent)}
+.hero{padding:80px 0 30px}.tag{color:var(--accent);font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(40px,9vw,76px);margin:8px 0;line-height:1.05}
+.hero p{color:var(--muted);max-width:560px;font-size:18px}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn{border:1px solid var(--line);padding:9px 18px;border-radius:99px;color:var(--text);text-decoration:none;font-size:14px;background:var(--card)}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+section{padding:54px 0}h2{font-family:'Playfair Display',Georgia,serif;font-size:34px;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 24px}
+.card,.col{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 10px 30px #0006}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.stat b{display:block;font-size:30px;color:var(--accent)}.stat span{font-size:12px;color:var(--muted)}
+.bs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}@media(max-width:700px){.bs{grid-template-columns:1fr}}
+.col h3{margin:0 0 4px;font-size:15px;letter-spacing:.08em;text-transform:uppercase}.col.a h3{color:var(--accent)}.col.l h3{color:var(--warn)}
+.col small{color:var(--muted);display:block;margin-bottom:8px}
+.item{border-top:1px solid var(--line)}.item button{all:unset;display:flex;justify-content:space-between;width:100%;padding:11px 0;cursor:pointer;gap:10px}
+.item button:hover{color:var(--accent)}.pts{color:var(--muted)}.more{display:none;color:var(--muted);font-size:14px;padding:0 0 12px}.item.open .more{display:block}
+.prog{height:6px;background:#ffffff14;border-radius:9px;overflow:hidden;margin:-4px 0 10px}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--warn),var(--gold));width:0;transition:width 1s}
+.total{display:flex;justify-content:space-between;border-top:2px solid var(--line);padding-top:10px;font-weight:700}
+.equity{margin-top:16px;border-color:#5eead455}.bar{height:10px;border-radius:9px;background:var(--warn);overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width 1s}
+#c{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 60px #000a;touch-action:pan-y}
+#c canvas{display:block;width:100%}#tip{position:absolute;pointer-events:none;background:#000b;padding:3px 10px;border-radius:8px;font-size:12px;display:none}
+.hint{color:var(--muted);font-size:13px;margin:10px 0}
+#panel{margin-top:12px;min-height:110px}#panel h4{margin:0 0 8px;font-size:20px;color:var(--gold)}
+.proj{border-top:1px solid var(--line);padding:10px 0}.proj small{color:var(--accent)}
+.paper{background:#e9e2cf;color:#3a3427;padding:16px;border-radius:4px;font-family:Georgia,serif;transform:rotate(-1deg);cursor:pointer}
+.goal{display:flex;gap:10px;align-items:center;padding:7px 0;cursor:pointer}.goal i{width:18px;height:18px;border:2px solid var(--accent);border-radius:5px;flex:none}
+.goal.done i{background:var(--accent)}.goal.done span{text-decoration:line-through;color:var(--muted)}
+.badge{display:inline-block;font-size:11px;padding:2px 10px;border-radius:99px;background:#fbbf2422;color:var(--gold);border:1px solid #fbbf2455;margin-bottom:8px}
+.card h5{margin:0 0 4px;font-size:17px}.card p{color:var(--muted);font-size:14px;margin:6px 0 0}
+.cert{border-left:3px solid var(--accent)}.cert a{color:var(--accent);font-size:13px;text-decoration:none}
+.sec-hidden{display:none}
+.mkt{display:inline-flex;gap:10px;align-items:center;margin-top:26px;padding:7px 16px;border-radius:10px;background:#ffffff08;border:1px solid var(--line);font:12px ui-monospace,Menlo,monospace;color:var(--muted)}
+.dot{width:9px;height:9px;border-radius:50%;animation:pu 1.4s infinite}@keyframes pu{50%{box-shadow:0 0 0 7px transparent}}
+.al{display:grid;grid-template-columns:120px 1fr 44px;gap:8px;align-items:center;font-size:13px;margin:10px 0;color:var(--muted)}input[type=range]{accent-color:#5eead4;width:100%}
+#ab{display:flex;height:12px;border-radius:9px;overflow:hidden;margin:14px 0}#ab i{display:block;transition:width .3s}
+.sbox b{display:block;font-size:20px;color:var(--text)}.sbox span{font-size:11px;color:var(--muted)}.up{color:#34d399}.dn{color:#f87171}
+.tape{overflow:hidden;white-space:nowrap;background:#060913;border-bottom:1px solid var(--line);font-size:13px;font-family:ui-monospace,Menlo,monospace}.tape>div{display:inline-block;padding:8px 0;animation:tape 45s linear infinite}@keyframes tape{to{transform:translateX(-50%)}}
+.hero{position:relative}#hc{position:absolute;inset:0;width:100%;height:100%;opacity:.3;pointer-events:none;z-index:0}.hero>*:not(canvas){position:relative;z-index:1}
+.scroll{display:inline-flex;gap:8px;align-items:center;margin-top:38px;padding:9px 18px;border-radius:99px;background:#34d39914;border:1px solid #34d39955;color:#34d399;text-decoration:none;font:600 13px ui-monospace,Menlo,monospace;animation:bob 1.6s ease-in-out infinite}.scroll b{min-width:52px}@keyframes bob{50%{transform:translateY(8px)}}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s,transform .8s}.rv.in{opacity:1;transform:none;transition:opacity .8s,transform .25s,border-color .25s}
+.card:not(#panel):hover{transform:translateY(-4px);border-color:#5eead455}
+.col.a .pts{color:#34d399}.col.l .pts{color:var(--warn)}
+#tb{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));display:none;z-index:6;padding:9px 14px;border-radius:99px;background:#34d399;color:#04140d;font:700 13px ui-monospace,Menlo,monospace;text-decoration:none;box-shadow:0 6px 20px #34d39955}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}*{animation:none!important}}.go{color:var(--accent)!important}
+
+body{overflow-x:hidden}
+.hero{min-height:calc(100vh - 56px);display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center;padding:30px 0 50px}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:20px}.hr{order:-1}}
+#hc{opacity:.12}
+.hero .orb{position:absolute;z-index:0;border-radius:50%;filter:blur(90px);opacity:.4;animation:fl 10s ease-in-out infinite}
+.o1{width:380px;height:380px;background:#5eead4;left:-120px;top:-40px}.o2{width:340px;height:340px;background:#7c5cff;right:-100px;bottom:0;animation-delay:-5s!important}
+@keyframes fl{50%{transform:translate(40px,30px) scale(1.12)}}
+.hero h1{font-size:clamp(40px,8vw,84px);letter-spacing:-.02em}
+.gt{background:linear-gradient(90deg,#5eead4,#60a5fa,#a78bfa,#5eead4);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 6s linear infinite}@keyframes sh{to{background-position:250% 0}}
+.role{font-size:clamp(18px,3vw,26px);margin:4px 0 12px;color:var(--text)}.role span{color:var(--accent);font-weight:700}
+.cur{display:inline-block;width:2px;height:1em;background:var(--accent);margin-left:3px;vertical-align:-3px;animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}
+.btn.pri{background:linear-gradient(90deg,#5eead4,#60a5fa);color:#04121a;border:none;font-weight:700;box-shadow:0 8px 30px #5eead455;transition:transform .2s}.btn.pri:hover{transform:translateY(-3px);color:#04121a}
+.scroll{background:none;border:none;color:var(--muted);font:500 13px Inter,sans-serif;animation:bob 1.8s ease-in-out infinite;margin-top:44px}
+.ava{position:relative;width:min(280px,70vw);aspect-ratio:1;margin:auto}
+.ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(#5eead4,#60a5fa,#a78bfa,#5eead4);animation:sp 7s linear infinite;filter:drop-shadow(0 0 28px #5eead455)}@keyframes sp{to{transform:rotate(360deg)}}
+.av{position:absolute;inset:6px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#1c2550,#0a0e22);display:grid;place-items:center;font:600 68px 'Playfair Display',Georgia,serif}
+.chip{position:absolute;padding:7px 14px;border-radius:99px;background:#0d1226ee;border:1px solid var(--line);font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 8px 24px #0008;animation:fl2 4s ease-in-out infinite}
+.c1{left:-26px;top:14%}.c2{right:-30px;top:48%;animation-delay:-1.3s}.c3{left:-6px;bottom:6%;animation-delay:-2.6s}@keyframes fl2{50%{transform:translateY(-9px)}}
+.item button:has(.go) span:first-child{text-decoration:underline dotted var(--accent);text-underline-offset:5px}
+.bsnote{color:var(--muted);font-size:14px;max-width:62ch;margin:-14px 0 22px}
+.ledger{display:grid;grid-template-columns:1fr 1fr;border-top:3px double #cfe3e0aa;border-bottom:3px double #cfe3e0aa;margin-top:22px}
+.lcol{padding:22px 0}.lcol+.lcol{border-left:1px solid var(--line);padding-left:26px}.lcol:first-child{padding-right:26px}
+.lcol h4,.leq h4,.lnotes h4{font:600 24px 'Playfair Display',Georgia,serif;margin:0 0 2px}
+.lcol .hint{font-size:13px;color:var(--muted);margin:0 0 4px}
+.lcol h5{font:600 14px Inter,sans-serif;color:var(--accent);margin:22px 0 6px}
+.lcol ul{list-style:none;margin:0;padding:0}
+.lcol li{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.lcol li span:first-child{font-weight:500}.lcol li .tag{font-size:12.5px;color:var(--muted);text-align:right}
+.lcol li .tag.wip{color:var(--gold);background:#fbbf2418;padding:0 10px;border-radius:99px;white-space:nowrap;align-self:center}
+.lcol li.go{cursor:pointer}.lcol li.go span:first-child{text-decoration:underline dotted var(--accent);text-underline-offset:5px}.lcol li.go:hover{color:var(--accent)}
+.leq{background:#5eead412;padding:20px 26px;border-bottom:3px double #cfe3e0aa}.leq h4{color:var(--accent)}.leq p{margin:4px 0 0;max-width:70ch}
+.lnotes{margin-top:40px}.lnotes h4{margin-bottom:12px}
+.lnotes dl{margin:0;display:grid;grid-template-columns:minmax(140px,210px) 1fr;gap:0 24px}.lnotes dt{font-weight:600;padding:12px 0;border-top:1px solid var(--line)}.lnotes dd{margin:0;padding:12px 0;border-top:1px solid var(--line);color:var(--muted)}
+.lcol li small{display:block;font-weight:400;color:var(--muted);font-size:13px;margin-top:2px}
+.lfoot{font:italic 18px 'Playfair Display',Georgia,serif;margin:28px 0 0}
+@media(max-width:720px){.ledger{grid-template-columns:1fr}.lcol+.lcol{border-left:0;padding-left:0;border-top:1px solid var(--line)}.lcol:first-child{padding-right:0}.lnotes dl{grid-template-columns:1fr}.lnotes dt{padding-bottom:0}.lnotes dd{border-top:0;padding-top:2px}}
+footer{padding:40px 0;color:var(--muted);font-size:13px;text-align:center}
+
+/* Cohesive portfolio styling */
+:root{--bg:#090d18;--card:#111827;--line:#263247;--text:#edf2fa;--muted:#a2aec2;--accent:#72e3d1;--warn:#f2a46d;--gold:#f4cc72}
+html{scroll-padding-top:88px}
+body{background:radial-gradient(900px 500px at 85% -10%,#19304755,transparent),var(--bg);line-height:1.65}
+.wrap{max-width:1120px}
+nav{background:#090d18eF;border-color:#ffffff12}
+nav .wrap{max-width:1120px;gap:8px;padding-top:10px;padding-bottom:10px}
+nav a{padding:8px 13px;border-radius:9px;transition:background .2s,color .2s}
+nav a:hover,nav a[aria-current="location"]{background:#72e3d114;color:var(--accent)}
+.hero{min-height:min(760px,calc(100vh - 56px));gap:clamp(30px,7vw,100px);padding:60px 0 75px}
+.hero .tag{font-size:12px;letter-spacing:.12em}
+.hero h1{max-width:760px;font-size:clamp(42px,7vw,76px);line-height:1.1}
+.gt{background:linear-gradient(100deg,#72e3d1,#82b9ee);background-clip:text;-webkit-background-clip:text;animation:none}
+.hero p{font-size:17px;line-height:1.8;color:#b3bfd1}
+.hero .orb{opacity:.16;filter:blur(110px)}
+#hc{opacity:.055}
+.ava{width:min(250px,62vw)}
+.ring{animation-duration:18s;filter:drop-shadow(0 0 18px #5eead422)}
+.chip{animation:none;background:#111827;border-color:#ffffff20}
+.c1{left:-20%;top:5%;animation:fl2 4.5s ease-in-out infinite}
+.c2{right:-30%;top:44%;animation:fl2 5s ease-in-out infinite;animation-delay:-1.7s}
+.c3{left:-12%;bottom:3%;animation:fl2 4.2s ease-in-out infinite;animation-delay:-3s}
+.chip{z-index:2;will-change:transform}
+.links{gap:10px}
+.btn{border-radius:10px;padding:10px 16px;transition:background .2s,border-color .2s,color .2s,transform .2s}
+.btn:hover{transform:translateY(-2px);background:#72e3d10c}
+.btn.pri{background:var(--accent);color:#071412;box-shadow:none}
+.btn.pri:hover{background:#9af0e3;color:#071412}
+section{padding:72px 0}
+section h2{font-size:clamp(29px,4vw,38px);letter-spacing:-.02em}
+.sub{max-width:72ch;line-height:1.75;margin-bottom:28px}
+#balance>.sub{margin-bottom:14px}
+#balance .bsnote{margin-bottom:16px}
+.card,.col{background:linear-gradient(145deg,#141d2c,#101725);border-color:#ffffff13;border-radius:14px;box-shadow:0 12px 32px #0002}
+.card:not(#panel):hover{transform:translateY(-3px);border-color:#72e3d155}
+.grid{gap:16px}
+.stat{padding:16px 18px}.stat b{font-size:27px}.stat span{font-size:12px;letter-spacing:.03em}
+.bs{gap:22px;margin-top:16px}
+.ledger{border:0;gap:22px;margin-top:30px}
+.lcol,.lcol:first-child,.lcol+.lcol{padding:24px;background:#101725;border:1px solid #ffffff13;border-radius:14px}
+.lcol h4,.leq h4,.lnotes h4{font-size:23px}
+.lcol h5{margin-top:23px;color:#72e3d1}
+.lcol li{align-items:flex-start;padding:12px 2px;border-color:#ffffff10}
+.lcol li .tag{max-width:42%;white-space:normal}
+.lcol li.go{border-radius:7px;padding-left:8px;padding-right:8px;transition:background .2s}
+.lcol li.go:hover,.lcol li.go:focus-visible{background:#72e3d10c;outline:2px solid #72e3d166;outline-offset:2px}
+.leq{margin-top:22px;border:1px solid #72e3d133;border-radius:14px;background:#72e3d10b;padding:22px 26px}
+.lnotes{margin-top:38px}
+.lnotes dt,.lnotes dd{border-color:#ffffff12}
+#c{border-radius:14px;border-color:#ffffff1c;box-shadow:0 18px 50px #0005}
+#panel{min-height:130px;padding:22px;border-color:#ffffff15}
+#panel h4{color:var(--accent)}
+.prog{background:#ffffff1a}
+input[type=range]{cursor:pointer;accent-color:var(--accent)}
+input:focus-visible,button:focus-visible,a:focus-visible,.goal:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#run{background:#72e3d114}
+.mkt{margin-top:20px;border-radius:9px}
+#tb{background:var(--accent);color:#071412;box-shadow:0 5px 18px #72e3d133}
+footer{border-top:1px solid #ffffff12;padding:32px 0 42px;margin-top:10px}
+@media(max-width:800px){.hero{min-height:0;padding:45px 0 55px}.hero .hr{order:-1}.ava{width:min(220px,55vw)}section{padding:56px 0}}
+@media(max-width:700px){nav .wrap{gap:2px;padding-left:12px;padding-right:12px}nav a{padding:8px 10px;font-size:13px}.lcol,.lcol:first-child,.lcol+.lcol{padding:19px}.ledger{grid-template-columns:1fr}.lcol+.lcol{border-top:1px solid #ffffff13}.lnotes dl{grid-template-columns:1fr}.lnotes dt{padding-bottom:4px}.lnotes dd{border-top:0;padding-top:2px}.hero .links .btn{font-size:13px}.sbox b{font-size:17px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ring,.gt,.hero .orb{animation:none!important}.btn,.card{transition:none!important}}
+
+/* Present the balance sheet as one connected financial statement. */
+.statement{margin-top:26px;overflow:hidden;border:1px solid #ffffff18;border-radius:14px;background:linear-gradient(145deg,#111a29,#0e1522);box-shadow:0 14px 34px #0003}
+.statement .ledger{margin:0;gap:0}
+.statement .lcol,.statement .lcol:first-child,.statement .lcol+.lcol{padding:24px 26px;background:transparent;border:0;border-radius:0;box-shadow:none}
+.statement .lcol+.lcol{border-left:1px solid #ffffff16}
+.statement .lcol h4{padding-bottom:10px;border-bottom:1px solid #ffffff20}
+.statement .leq{margin:0;padding:18px 26px;border:0;border-top:1px solid #ffffff20;border-radius:0;background:#72e3d10b}
+.statement .lnotes{margin:0;padding:18px 26px 4px;border-top:1px solid #ffffff16}
+.statement .lnotes h4{font:600 16px Inter,sans-serif;letter-spacing:.02em;margin:0 0 8px;color:var(--text)}
+.statement .lnotes dl{grid-template-columns:minmax(130px,180px) 1fr;gap:0 18px}
+.statement .lnotes dt,.statement .lnotes dd{padding:8px 0;border-color:#ffffff10;font-size:13px}
+.statement .lfoot{margin:6px 26px 0;padding:12px 0 18px;border-top:1px solid #ffffff10;font-size:16px;color:var(--muted)}
+@media(max-width:720px){.statement .lcol,.statement .lcol:first-child,.statement .lcol+.lcol{padding:20px}.statement .lcol+.lcol{border-left:0;border-top:1px solid #ffffff16}.statement .leq{padding:18px 20px}.statement .lnotes{padding:16px 20px 4px}.statement .lnotes dl{grid-template-columns:1fr}.statement .lnotes dt{padding:8px 0 2px}.statement .lnotes dd{border-top:0;padding:2px 0 8px}.statement .lfoot{margin:6px 20px 0}}
+
+/* Final polish: consistent rhythm and details */
+section+section{border-top:1px solid #ffffff0d}
+section h2{margin-bottom:10px}
+.hero p,.sub,.bsnote{max-width:62ch}
+.assump{margin:12px 0 0;font-size:12.5px;line-height:1.6;color:var(--muted)}
+.badge{letter-spacing:.03em;font-weight:600}
+.card h5{font-size:17px;line-height:1.35}
+footer{color:var(--muted)}
+::selection{background:#72e3d133}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111827;border:1px solid #72e3d155;color:#edf2fa;padding:10px 16px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:20;max-width:90vw;text-align:center}
+
+/* ===== Final design system: spacing, type and colour ===== */
+:root{--r:14px;--gap:20px;--sec:88px;--hair:#ffffff14}
+body{font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h4,.lfoot{font-family:'Playfair Display',Georgia,serif;font-weight:600}
+.wrap{padding:0 clamp(18px,4vw,32px)}
+nav .wrap{padding-top:10px;padding-bottom:10px}
+.btn{font:500 14px/1 Inter,system-ui,sans-serif;padding:12px 18px}
+.btn.pri{font-weight:600}
+/* hero */
+.hero{min-height:0;padding:clamp(48px,9vh,96px) 0 clamp(56px,10vh,104px)}
+.hero h1{font-size:clamp(40px,6.6vw,72px);line-height:1.08;margin:10px 0 12px}
+.role{font-size:clamp(18px,2.4vw,24px);margin:0 0 18px}
+.hero p{margin:0;max-width:56ch}
+.hero .links{margin-top:28px}
+.scroll{margin-top:36px;color:var(--muted);font:500 13px Inter,system-ui,sans-serif}
+.ava{width:min(260px,62vw)}
+.chip{font:600 12px Inter,system-ui,sans-serif}
+.hero .orb.o2{background:#82b9ee;opacity:.12}
+/* sections */
+section{padding:var(--sec) 0}
+#cases,#certs{padding-top:56px}
+section h2{font-size:clamp(30px,4vw,40px);line-height:1.15;margin:0 0 10px}
+.sub{font-size:16px;color:var(--muted);margin:0 0 36px;max-width:64ch}
+#balance .sub{margin-bottom:12px}
+#balance .bsnote{margin:0 0 28px;font-size:15px;max-width:64ch}
+.grid{gap:var(--gap)}
+.card,.col{border-radius:var(--r);padding:22px}
+.card h5{font-size:17px;line-height:1.35;margin:0 0 6px}
+.card p{font-size:14.5px;line-height:1.65}
+.badge{margin-bottom:10px}
+/* balance sheet */
+.stat{padding:18px 20px}
+.stat b{font:600 30px/1.1 'Playfair Display',Georgia,serif;margin-bottom:6px}
+.statement{margin-top:24px}
+/* simulator and room */
+.bs{gap:var(--gap);margin-top:0}
+.col h3{color:var(--accent)!important;text-transform:none;letter-spacing:0;font:600 16px Inter,system-ui,sans-serif;margin:0 0 14px}
+#c{border-radius:var(--r)}
+#panel{margin-top:var(--gap)}
+.hint{margin:12px 0 0}
+/* colour unification */
+.up{color:var(--accent)}
+.mkt{margin-top:0;font-family:Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+#tb{font:600 13px Inter,system-ui,sans-serif}
+/* footer */
+footer{margin-top:0;padding:40px 0 56px;border-top:1px solid var(--hair)}
+@media(max-width:700px){section{padding:60px 0}.sub{margin-bottom:28px}.hero{padding:36px 0 48px}.card,.col{padding:18px}}
+</style></head><body>
+<nav aria-label="Main navigation"><div class="wrap"><a href="#top">Home</a><a href="#balance">Balance Sheet</a><a href="#sim">Simulator</a><a href="#room">My Room</a></div></nav>
+<div class="wrap">
+<header class="hero" id="top"><canvas id="hc"></canvas><div class="orb o1"></div><div class="orb o2"></div>
+<div class="hl"><div class="tag">PGDM Core · IMT Hyderabad</div>
+<h1>Hi, I'm <span class="gt">Arshveen Kaur</span></h1>
+<div class="role">Interested in <span id="ty"></span><i class="cur"></i></div>
+<p>Finance student at IMT Hyderabad, curious about how markets work, how companies are valued, and how numbers turn into decisions. Learning by doing, one model and one case at a time.</p>
+<div class="links"><a class="btn pri" href="#balance">See my balance sheet</a><a class="btn" href="#room">Step into my room</a><a class="btn" href="mailto:akaur@imthyderabad.edu.in">Contact me</a><a class="btn" href="https://www.linkedin.com/in/arshveen-kaur/" target="_blank" rel="noopener">LinkedIn</a></div>
+<a class="scroll" href="#balance">Scroll ↓</a></div>
+<div class="hr"><div class="ava"><div class="ring"></div><div class="av">AK</div><span class="chip c1">PGDM Core</span><span class="chip c2">IMT Hyderabad</span><span class="chip c3">Finance &amp; markets</span></div></div></header>
+
+<section id="balance"><h2>My Balance Sheet</h2><p class="sub" id="bsAsOf"></p><p class="bsnote" id="bsNote"></p>
+<div class="grid" id="stats"></div>
+<div class="statement">
+<div class="ledger"><div class="lcol"><h4>Assets</h4><p class="hint">What I have and can use</p><div id="assets"></div></div><div class="lcol"><h4>Liabilities</h4><p class="hint">What I owe myself in learning</p><div id="liabs"></div></div></div>
+<div class="leq"><h4 id="eqT"></h4><p id="eqP"></p></div>
+<div class="lnotes"><h4>Notes to accounts</h4><dl id="nt"></dl></div>
+<p class="lfoot" id="bsFoot"></p>
+</div></section>
+
+
+
+
+
+
+<section id="sim"><h2>Portfolio Simulator</h2><p class="sub">An interactive illustration of how asset allocation shapes risk and return, using a notional ₹1,00,000. Illustrative only, not investment advice.</p>
+<div class="bs"><div class="col"><h3 style="color:var(--gold)">Risk appetite: <span id="rl"></span></h3><input type="range" id="risk" min="1" max="10" value="5" aria-label="Choose portfolio risk appetite from 1 to 10"><div id="ab"></div><div id="al"></div></div>
+<div class="col"><div class="grid" id="ss"></div><canvas id="mc" style="width:100%;height:210px;margin-top:14px"></canvas><button class="btn" id="run" style="cursor:pointer;margin-top:8px">▶ Simulate 1 year again</button> <small id="sr" style="color:var(--muted);margin-left:8px"></small><p class="assump">Assumptions (annual return / volatility): equity 12% / 18%, debt 7% / 3%, gold 8% / 14%, cash 3.5% / 0%. Equity-gold correlation 0.1. One-year Monte Carlo of 40 paths.</p></div></div></section>
+<section id="cases" class="sec-hidden"><button class="btn" onclick="closeSec()" style="margin-bottom:18px;cursor:pointer">← Back to balance sheet</button><h2>Case Competitions</h2><p class="sub">Where I test ideas under pressure.</p><div class="grid" id="cg"></div></section><section id="certs" class="sec-hidden"><button class="btn" onclick="closeSec()" style="margin-bottom:18px;cursor:pointer">← Back to balance sheet</button><h2>Certificates</h2><p class="sub">Credentials and continuous learning.</p><div class="grid" id="cf"></div></section><section id="room"><h2>My Room</h2><p class="sub">Drag to look around. Click the lamp, board, bookshelf, laptop, dustbin, window and piggy bank.</p>
+<div id="c" aria-label="Interactive 3D model of a nighttime room. Drag to look around and click objects for details."><div id="tip" role="status"></div></div>
+<div class="card" id="panel"><h4>Welcome to my room</h4><p style="color:var(--muted);margin:0">Everything here tells part of my story. Look around and click things.</p></div></section><footer><div class="mkt" id="mk" style="margin:0 0 16px"></div><div class="links" style="justify-content:center;margin:0 0 16px"><a class="btn" href="mailto:akaur@imthyderabad.edu.in">akaur@imthyderabad.edu.in</a><a class="btn" href="https://www.linkedin.com/in/arshveen-kaur/" target="_blank" rel="noopener">LinkedIn</a></div><span id="ft"></span></footer></div>
+
+<a id="tb" href="#top">↑ Top</a>
+<script>
+function applyContent(){const C=CONTENT,q=x=>document.querySelector(x);
+document.title=C.name+' | Finance Portfolio';
+q('.hero .tag').textContent=C.university;q('.gt').textContent=C.name;q('.hero .hl p').textContent=C.intro;q('.av').textContent=C.initials;
+['c1','c2','c3'].forEach((k,i)=>q('.chip.'+k).textContent=C.chips[i]||'');
+document.querySelectorAll('a[href^="mailto"]').forEach(a=>{a.href='mailto:'+C.email;a.target='_blank';a.rel='noopener';if(a.textContent.indexOf('@')>-1)a.textContent=C.email});
+document.querySelectorAll('a[href*="linkedin"]').forEach(a=>a.href=C.linkedin);
+document.querySelectorAll('[data-c=resume]').forEach(a=>a.href=C.resume);
+ft.textContent='© '+C.name+' · '+C.footerNote;
+}
+applyContent();
+const BS=CONTENT.balanceSheet,$=x=>document.getElementById(x);
+$('bsAsOf').textContent=BS.asOf;$('bsNote').textContent=BS.note;$('bsFoot').textContent=BS.footer;$('eqT').textContent=BS.equityTitle;$('eqP').textContent=BS.equityText;
+$('stats').innerHTML=(CONTENT.stats||[]).map(x=>'<div class="card stat"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>').join('');
+function ledg(id,groups){$(id).innerHTML=groups.map(g=>'<h5>'+g.group+'</h5><ul>'+g.items.map(x=>'<li'+(x.go?' class="go" data-go="'+x.go+'" role="button" tabindex="0" aria-label="Open '+x.n+'"':'')+'><span>'+x.n+(x.d?'<small>'+x.d+'</small>':'')+'</span><span class="tag'+(x.wip?' wip':'')+'">'+(x.t||'')+'</span></li>').join('')+'</ul>').join('')}
+ledg('assets',BS.assets);ledg('liabs',BS.liabilities);
+document.querySelectorAll('li.go').forEach(l=>{l.onclick=()=>openSec(l.dataset.go);l.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openSec(l.dataset.go)}}});
+$('nt').innerHTML=BS.notes.map(n=>'<dt>'+n[0]+'</dt><dd>'+n[1]+'</dd>').join('');
+function openSec(id){closeSec(1);const e=document.getElementById(id);e.classList.remove('sec-hidden');e.scrollIntoView({behavior:'smooth'})}
+function closeSec(k){['cases','certs'].forEach(i=>document.getElementById(i).classList.add('sec-hidden'));if(!k)document.getElementById('balance').scrollIntoView({behavior:'smooth'})}
+const cases=CONTENT.caseComps.map(x=>({n:x.name,o:x.org,b:x.badge,d:x.desc}));
+cg.innerHTML=cases.map(x=>'<div class="card"><span class="badge">'+x.b+'</span><h5>'+x.n+'</h5><small style="color:var(--accent)">'+x.o+'</small><p>'+x.d+'</p></div>').join('');
+const certs=CONTENT.certificates;
+cf.innerHTML=certs.map(x=>'<div class="card cert"><h5>'+x[0]+'</h5><small style="color:var(--muted)">'+x[1]+' · '+x[2]+'</small>'+( /^in progress/i.test(x[2])?'<p><span class="badge">In progress</span></p>':'<p><span class="badge">Completed</span></p>')+'</div>').join('');
+
+/* ---------- 3D room ---------- */
+const T=THREE,wrap=document.getElementById('c'),tip=document.getElementById('tip');
+const W=()=>wrap.clientWidth,H=()=>Math.max(340,Math.min(W()*.64,640));
+const R=new T.WebGLRenderer({antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,2));R.shadowMap.enabled=true;R.shadowMap.type=T.PCFSoftShadowMap;R.toneMapping=T.ACESFilmicToneMapping;R.toneMappingExposure=1.15;wrap.appendChild(R.domElement);
+const sc=new T.Scene();sc.background=new T.Color(0x05070f);sc.fog=new T.Fog(0x05070f,12,26);
+const cam=new T.PerspectiveCamera(48,1,.1,60);
+const tex=(w,h,f)=>{const c=document.createElement('canvas');c.width=w;c.height=h;f(c.getContext('2d'),w,h);const t=new T.CanvasTexture(c);t.anisotropy=4;return t};
+const M=(c,o={})=>new T.MeshStandardMaterial(Object.assign({color:c,roughness:.8},o));
+function bx(w,h,d,m,x,y,z,p){const o=new T.Mesh(new T.BoxGeometry(w,h,d),m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;(p||sc).add(o);return o}
+function cy(rt,rb,h,m,x,y,z,p,open){const o=new T.Mesh(new T.CylinderGeometry(rt,rb,h,28,1,!!open),m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;(p||sc).add(o);return o}
+const G=(key,x,y,z,ry)=>{const g=new T.Group();g.position.set(x,y,z);g.rotation.y=ry||0;g.userData.key=key;sc.add(g);return g};
+// floor + walls
+const fl=tex(512,512,(c,w,h)=>{c.fillStyle='#77736c';c.fillRect(0,0,w,h);for(let y=0;y<h;y+=128)for(let x=0;x<w;x+=128){c.fillStyle='hsl(38,8%,'+(43+Math.random()*5)+'%)';c.fillRect(x+2,y+2,124,124);c.strokeStyle='rgba(20,18,16,.28)';c.lineWidth=3;c.strokeRect(x+1,y+1,126,126);for(let i=0;i<20;i++){c.fillStyle='rgba(255,255,255,.025)';c.fillRect(x+Math.random()*124,y+Math.random()*124,8,2)}}});fl.wrapS=fl.wrapT=T.RepeatWrapping;fl.repeat.set(2,2);
+const floor=new T.Mesh(new T.PlaneGeometry(8,8),M(0xffffff,{map:fl,roughness:.55}));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;sc.add(floor);
+const wm=M(0xaaa69c,{roughness:.98});
+[[0,2,-4,0],[-4,2,0,Math.PI/2],[4,2,0,-Math.PI/2]].forEach(([x,y,z,r])=>{const w=new T.Mesh(new T.PlaneGeometry(8,4),wm);w.position.set(x,y,z);w.rotation.y=r;w.receiveShadow=true;sc.add(w)});
+const ceil=new T.Mesh(new T.PlaneGeometry(8,8),M(0x77766f));ceil.rotation.x=Math.PI/2;ceil.position.y=4;sc.add(ceil);
+const wood=M(0x6b4a33,{roughness:.6}),dark=M(0x2a2f48,{roughness:.5,metalness:.3});
+bx(8,.12,.05,M(0x1d2340),0,.06,-3.97);bx(.05,.12,8,M(0x1d2340),-3.97,.06,0);bx(.05,.12,8,M(0x1d2340),3.97,.06,0);
+// Simple neutral tile floor and a small, understated bedside rug.
+const rug=new T.Mesh(new T.BoxGeometry(2.5,.025,3.2),M(0x645b58,{roughness:1}));rug.position.set(2.15,.02,.55);rug.receiveShadow=true;sc.add(rug);
+// Window centered above the desk on the back wall, with the pink curtains from the photos.
+const wg=G('win',1.25,2.35,-3.94,0);
+const sky=tex(512,400,(c,w,h)=>{const g=c.createLinearGradient(0,0,0,h);g.addColorStop(0,'#060b19');g.addColorStop(1,'#151c2c');c.fillStyle=g;c.fillRect(0,0,w,h);c.fillStyle='#b7c8de';for(let i=0;i<55;i++){c.globalAlpha=.35+Math.random()*.6;c.fillRect(Math.random()*w,Math.random()*h*.72,1.5,1.5)}c.globalAlpha=1;c.fillStyle='#090c14';let x=0;while(x<w){const bw=30+Math.random()*50,bh=70+Math.random()*130;c.fillRect(x,h-bh,bw,bh);c.fillStyle='#b38b55';for(let k=0;k<5;k++)if(Math.random()>.65)c.fillRect(x+6+Math.random()*(bw-12),h-bh+10+Math.random()*(bh-20),4,5);c.fillStyle='#090c14';x+=bw+4}});
+const sp=new T.Mesh(new T.PlaneGeometry(2.4,1.9),new T.MeshBasicMaterial({map:sky}));sp.position.z=.045;wg.add(sp);
+const fm=M(0x555967,{roughness:.55,metalness:.25}),glass=M(0x17202d,{roughness:.25,metalness:.15});
+bx(2.55,2.05,.08,glass,0,0,0,wg);
+bx(2.58,.08,.12,fm,0,.99,0,wg);bx(2.58,.08,.12,fm,0,-.99,0,wg);
+bx(.08,2.05,.12,fm,-1.25,0,0,wg);bx(.08,2.05,.12,fm,1.25,0,0,wg);bx(.045,1.9,.13,fm,0,0,.01,wg);bx(2.5,.045,.13,fm,0,0,.01,wg);
+const curtain=M(0x9b4d83,{roughness:1});
+bx(.48,2.35,.18,curtain,-1.48,-.12,.16,wg);bx(.48,2.35,.18,curtain,1.48,-.12,.16,wg);
+bx(3.35,.055,.06,fm,0,1.18,.13,wg);
+for(let i=0;i<7;i++){bx(.07,2.3,.2,M(i%2?0xa95791:0x854172,{roughness:1}),-1.67+i*.06,-.12,.17,wg);bx(.07,2.3,.2,M(i%2?0xa95791:0x854172,{roughness:1}),1.31+i*.06,-.12,.17,wg)}
+// Wardrobe against the back wall, to the left of the window.
+const wardrobe=M(0x9a712f,{roughness:.85}),wardTrim=M(0x6c512a,{roughness:.8});
+bx(1.65,2.75,.62,wardrobe,-2.65,1.38,-3.55);bx(1.72,.08,.68,wardTrim,-2.65,2.78,-3.55);bx(.06,2.6,.04,wardTrim,-2.65,1.38,-3.22);
+[-3.43,-1.87].forEach(x=>{bx(.025,2.58,.035,wardTrim,x,1.38,-3.20);cy(.025,.025,.08,M(0xd7c08a,{metalness:.6}),x+.12,1.35,-3.16)});
+// A simple, smoothly made bed with one duvet and two pillows.
+const bed=G('bed',2.25,0,.55,0),bedFrame=M(0x292b31,{roughness:.8}),linen=M(0x34465a,{roughness:1}),duvet=M(0x56616b,{roughness:1});
+bx(2.0,.22,3.45,bedFrame,0,.42,0,bed);bx(2.05,.2,3.5,linen,0,.62,0,bed);bx(2.05,.12,3.42,duvet,0,.77,.03,bed);
+bx(2.12,.68,.12,bedFrame,0,.78,-1.78,bed);
+[[-.62,-1.25],[.48,-1.25]].forEach(([x,z])=>{const p=new T.Mesh(new T.BoxGeometry(.82,.18,.55),M(0xbab4a9,{roughness:1}));p.position.set(x,.91,z);p.rotation.z=x<0?-.04:.04;p.castShadow=true;bed.add(p)});
+// Desk sits directly beneath the window, with a simple chair pulled up to it.
+bx(3.2,.12,1.3,M(0xd2d1cc,{roughness:.65}),1.25,1.05,-3.28);[[-.25,-3.78],[2.75,-3.78],[-.25,-2.78],[2.75,-2.78]].forEach(([x,z])=>bx(.08,1,.08,dark,x,.5,z));
+bx(.62,.08,.62,M(0x252932),1.25,.6,-2.28);bx(.62,.72,.08,M(0x252932),1.25,.96,-1.98);cy(.04,.04,.55,dark,1.25,.3,-2.28);
+// laptop
+const lap=G('laptop',.95,1.1,-3.28);
+bx(.95,.04,.62,M(0x9aa3c0,{metalness:.8,roughness:.3}),0,.02,0,lap);
+const st=tex(512,320,(c,w,h)=>{c.fillStyle='#0b1220';c.fillRect(0,0,w,h);c.fillStyle='#5eead4';c.font='bold 22px sans-serif';c.fillText('DCF MODEL  ·  NIFTY 50',20,36);c.strokeStyle='#5eead4';c.lineWidth=4;c.beginPath();c.moveTo(20,260);for(let x=20;x<492;x+=24)c.lineTo(x,250-(x-20)*.25-Math.random()*40);c.stroke();c.strokeStyle='#ffffff22';for(let i=0;i<5;i++){c.beginPath();c.moveTo(20,70+i*45);c.lineTo(492,70+i*45);c.stroke()}});
+const scr=bx(.95,.62,.03,M(0x0b0f1a,{emissive:0xffffff,emissiveMap:st,emissiveIntensity:.9}),0,.33,-.3,lap);scr.rotation.x=-.22;scr.position.y=.32;
+// lamp
+const lg=G('lamp',2.35,1.1,-3.42);cy(.18,.2,.04,dark,0,.02,0,lg);cy(.015,.015,.65,dark,0,.35,0,lg);
+const shM=M(0xffd58a,{emissive:0xffb347,emissiveIntensity:1.8,side:T.DoubleSide});
+const sh=new T.Mesh(new T.ConeGeometry(.28,.3,24,1,true),shM);sh.position.set(0,.75,0);lg.add(sh);
+const bulb=new T.Mesh(new T.SphereGeometry(.07,12,10),M(0xffe3a3,{emissive:0xffb54a,emissiveIntensity:2}));bulb.position.set(0,.62,0);lg.add(bulb);
+const pl=new T.PointLight(0xffc477,3.5,9,2);pl.position.set(0,.7,.05);pl.castShadow=true;pl.shadow.mapSize.set(1024,1024);lg.add(pl);
+// Mug and a few small everyday desk items.
+cy(.09,.08,.14,M(0xe8ecf5),1.8,1.17,-3.05);
+// cork board
+const cork=tex(768,400,(c,w,h)=>{c.fillStyle='#4d4945';c.fillRect(0,0,w,h);const cards=[['#e8dfcf',CONTENT.boardNotes[0],28,25,170,145],['#bfccd0',CONTENT.boardNotes[1],215,16,145,125],['#b65a48',CONTENT.boardNotes[2],378,35,175,145],['#dfd3b7',CONTENT.boardNotes[3],565,20,170,135],['#313946','MAKE IT COUNT',42,190,180,175],['#d9d0bd',CONTENT.boardNotes[4],245,165,155,205],['#eee5d8','DREAM BIG',420,195,175,155],['#353744','KEEP GOING',610,180,130,185]];cards.forEach(([col,t,x,y,cw,ch],i)=>{c.fillStyle='rgba(0,0,0,.35)';c.fillRect(x+5,y+7,cw,ch);c.fillStyle=col;c.fillRect(x,y,cw,ch);c.fillStyle=i===2||i===4||i===7?'#f3dfb7':'#3a3938';c.textAlign='center';c.font='bold '+(i%3===0?22:18)+'px sans-serif';c.fillText(String(t).toUpperCase().slice(0,18),x+cw/2,y+ch*.62);if(i%2===0){c.fillStyle=i===2?'#e8c46b':'#927e69';c.beginPath();c.arc(x+cw/2,y+ch*.28,Math.min(cw,ch)*.14,0,7);c.fill()}c.fillStyle='#e2bd78';c.beginPath();c.arc(x+cw/2,y+7,5,0,7);c.fill()})});
+const bg=G('board',3.92,2.15,.15,-Math.PI/2);bx(2.6,1.4,.06,wood,0,0,0,bg);const cp=new T.Mesh(new T.PlaneGeometry(2.45,1.28),new T.MeshStandardMaterial({map:cork,roughness:1}));cp.position.z=.04;bg.add(cp);
+// Keep the clickable bookshelf on the opposite wall, away from the bed and window.
+const sg=G('shelf',-3.75,0,-.6,Math.PI/2),shw=M(0x4a3426,{roughness:.7});
+bx(.05,2.3,.45,shw,-.9,1.15,0,sg);bx(.05,2.3,.45,shw,.9,1.15,0,sg);bx(1.85,2.3,.03,M(0x2b1e16),0,1.15,-.2,sg);
+[.05,.9,1.55,2.3].forEach(y=>bx(1.85,.05,.45,shw,0,y,0,sg));
+const BC=[0xc0392b,0x2e86c1,0x27ae60,0x8e44ad,0xd68910,0x16a085],BH=[.5,.42,.55,.46,.52,.48];const bk=CONTENT.books.slice(0,6).map((b,i)=>[b[0],b[1],BC[i],BH[i]]);
+bk.forEach((b,i)=>{const r=i<3?.925:1.575,h=b[3]+.12,o=bx(.12,h,.3,M(b[2],{roughness:.6}),-.55+(i%3)*.5,r+h/2,0,sg);o.userData.book=i});
+for(let i=0;i<9;i++)bx(.1,.4+Math.random()*.15,.28,M(new T.Color().setHSL(Math.random(),.4,.35)),-.7+i*.17,.25+.12,0,sg);
+// bin + paper
+const bn=G('bin',-.9,0,-2.35);cy(.3,.24,.62,M(0x586382,{metalness:.6,roughness:.4}),0,.31,0,bn,true).material.side=T.DoubleSide;cy(.24,.24,.02,dark,0,.02,0,bn);
+const pg=new T.IcosahedronGeometry(.17,2);for(let i=0;i<pg.attributes.position.count;i++){pg.attributes.position.setXYZ(i,...[0,1,2].map(k=>pg.attributes.position.array[i*3+k]*(.8+Math.random()*.4)))}pg.computeVertexNormals();
+const pp=new T.Mesh(new T.IcosahedronGeometry(.17,1),M(0xe9e2cf,{roughness:1,flatShading:true}));pp.geometry=pg;pp.position.set(0,.66,0);pp.castShadow=true;bn.add(pp);
+const pp2=pp.clone();pp2.position.set(.12,.58,.1);pp2.scale.setScalar(.8);bn.add(pp2);const pp3=pp.clone();pp3.position.set(-.5,.14,.45);pp3.scale.setScalar(.75);bn.add(pp3);
+// plant
+cy(.2,.15,.35,M(0x8a4b32),-3.3,.18,2.2);for(let i=0;i<8;i++){const l=new T.Mesh(new T.SphereGeometry(.16,10,8),M(0x2f8f5b));l.scale.set(.5,1.6,.3);l.position.set(-3.3+Math.cos(i)*.15,.65+(i%3)*.12,2.2+Math.sin(i)*.15);l.rotation.set(Math.sin(i)*.5,i,Math.cos(i)*.5);l.castShadow=true;sc.add(l)}
+const lc=document.createElement('canvas');lc.width=512;lc.height=64;const lx=lc.getContext('2d'),lt=new T.CanvasTexture(lc);
+const seg=[['NIFTY ▲ 1.2%','#34d399'],['SENSEX ▲ 0.9%','#34d399'],['USD/INR ▼ 0.1%','#f87171'],['GOLD ▲ 0.4%','#34d399']];
+function led(t){lx.fillStyle='#05070f';lx.fillRect(0,0,512,64);lx.font='bold 30px monospace';lx.textBaseline='middle';let w=0;seg.forEach(q=>w+=lx.measureText(q[0]+'     ').width);let x=-(t*.06%w);for(let k=0;k<3;k++)seg.forEach(q=>{lx.fillStyle=q[1];lx.fillText(q[0],x,34);x+=lx.measureText(q[0]+'     ').width});lt.needsUpdate=true}
+// Warm fairy lights trace the wall above the bed, like the real room.
+const lightPath=new T.CatmullRomCurve3([new T.Vector3(-3.65,3.05,-3.91),new T.Vector3(-2.8,3.35,-3.91),new T.Vector3(-1.8,3.0,-3.91),new T.Vector3(-.7,3.3,-3.91),new T.Vector3(.4,3.02,-3.91),new T.Vector3(1.5,3.32,-3.91),new T.Vector3(2.7,3.04,-3.91),new T.Vector3(3.91,3.28,-2.8),new T.Vector3(3.91,3.02,-1.4),new T.Vector3(3.91,3.3,.1)]);
+sc.add(new T.Mesh(new T.TubeGeometry(lightPath,50,.012,6,false),M(0x35302d,{roughness:1})));
+for(let i=0;i<15;i++){const p=lightPath.getPoint(i/14),bulb=new T.Mesh(new T.SphereGeometry(.045,10,8),M(0xffcf63,{emissive:0xffa72c,emissiveIntensity:1.1}));bulb.position.copy(p);sc.add(bulb)}
+// A quiet ceiling fan, visible in the reference photos.
+const fan=G('fan',-.25,3.78,.25,0);cy(.18,.18,.2,dark,0,0,0,fan);
+for(let i=0;i<4;i++){const blade=bx(1.25,.055,.22,M(0x34343a,{roughness:.7}),0,0,.72,fan);blade.rotation.y=i*Math.PI/2}
+const pig=G('pig',.15,1.1,-3.18,.5),pk=M(0xf4a3b8,{roughness:.5}),one=new T.Vector3(1,1,1);
+const pb=new T.Mesh(new T.SphereGeometry(.2,24,16),pk);pb.scale.set(1.25,1,1);pb.position.y=.26;pb.castShadow=true;pig.add(pb);
+[[.12,.1],[.12,-.1],[-.12,.1],[-.12,-.1]].forEach(([x,z])=>cy(.04,.04,.1,pk,x,.05,z,pig));
+cy(.07,.07,.07,M(0xe88aa5),.27,.28,0,pig).rotation.z=Math.PI/2;
+[[.18,.1],[.18,-.1]].forEach(([x,z])=>{const e=new T.Mesh(new T.ConeGeometry(.06,.1,4),pk);e.position.set(x,.46,z);pig.add(e)});
+bx(.14,.02,.03,M(0x3a1a28),-.02,.46,0,pig);
+const cert=G('cert',.95,1.1,-2.9),ct=tex(400,300,(c,w,h)=>{c.fillStyle='#f3ead2';c.fillRect(0,0,w,h);c.strokeStyle='#b08d3c';c.lineWidth=8;c.strokeRect(14,14,w-28,h-28);c.fillStyle='#3a3427';c.textAlign='center';c.font='bold 26px Georgia';c.fillText('CERTIFICATE',w/2,70);c.font='20px Georgia';c.fillText('Bloomberg Financial',w/2,130);c.fillText('Fundamentals',w/2,160);c.fillStyle='#d9cfae';c.fillRect(60,200,280,16);c.fillStyle='#34a37a';c.fillRect(60,200,196,16);c.fillStyle='#8a6d2b';c.font='italic 18px Georgia';c.fillText('in progress · 70%',w/2,250)});
+const cm2=new T.Mesh(new T.PlaneGeometry(.4,.3),new T.MeshStandardMaterial({map:ct,roughness:.8}));cm2.position.set(0,.17,0);cm2.rotation.x=-.28;cm2.castShadow=true;
+// lights
+sc.add(new T.HemisphereLight(0x30384c,0x211a17,.28));
+const moon=new T.DirectionalLight(0x53617b,.12);moon.position.set(-7,4,1);moon.target.position.set(0,1,-2);sc.add(moon,moon.target);
+// camera + interaction
+let yaw=0,pit=0,down=null,mv=0;const tg=new T.Vector3(0,1.5,-1.8);
+function place(){const r=8.4,b=.2+pit;cam.position.set(tg.x+r*Math.sin(yaw)*Math.cos(b),tg.y+r*Math.sin(b),tg.z+r*Math.cos(yaw)*Math.cos(b));cam.position.x=Math.max(-3.6,Math.min(3.6,cam.position.x));cam.lookAt(tg)}
+function size(){R.setSize(W(),H());cam.aspect=W()/H();cam.fov=W()<600?62:48;cam.updateProjectionMatrix()}
+addEventListener('resize',size);size();place();
+const rc=new T.Raycaster(),v=new T.Vector2();
+function pick(e){const b=R.domElement.getBoundingClientRect();v.set((e.clientX-b.left)/b.width*2-1,-(e.clientY-b.top)/b.height*2+1);rc.setFromCamera(v,cam);const h=rc.intersectObjects(sc.children,true);for(const x of h){let o=x.object;while(o){if(o.userData.book!==undefined)return{key:'book',i:o.userData.book};if(o.userData.key)return{key:o.userData.key};o=o.parent}}return null}
+const names={cert:'Certificate in progress',pig:'Piggy bank',win:'Window',laptop:'Laptop: projects',lamp:'Toggle lamp',board:'Goals board',shelf:'Bookshelf',bin:'Dustbin',book:'Book'};
+const cv=R.domElement;
+cv.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY};mv=0});
+cv.addEventListener('pointermove',e=>{if(down&&e.buttons){const dx=e.clientX-down.x,dy=e.clientY-down.y;mv+=Math.abs(dx)+Math.abs(dy);yaw=Math.max(-.7,Math.min(.7,yaw-dx*.004));pit=Math.max(-.12,Math.min(.3,pit+dy*.003));down={x:e.clientX,y:e.clientY};place()}else{const p=pick(e);cv.style.cursor=p?'pointer':'grab';if(p){tip.style.display='block';tip.textContent=p.key==='book'?bk[p.i][0]:names[p.key];tip.style.left=e.offsetX+12+'px';tip.style.top=e.offsetY+12+'px'}else tip.style.display='none'}});
+cv.addEventListener('pointerup',e=>{down=null;if(mv<6){const p=pick(e);if(p)act(p)}});
+let lit=true;function lamp(){lit=!lit;pl.intensity=lit?3.5:0;shM.emissiveIntensity=lit?1.8:0;bulb.material.emissiveIntensity=lit?2:0}
+const goals=CONTENT.goals.map(g=>({t:g[0],d:g[1]?1:0}));
+const projects=CONTENT.projects;
+const P=document.getElementById('panel');const show=h=>{P.innerHTML=h;P.scrollIntoView({behavior:'smooth',block:'nearest'})};
+const gh=()=>'<h4>Goals board</h4><p style="color:var(--muted)">Tap to tick off.</p>'+goals.map((x,i)=>'<div class="goal'+(x.d?' done':'')+'" data-i="'+i+'" role="checkbox" aria-checked="'+!!x.d+'" tabindex="0"><i></i><span>'+x.t+'</span></div>').join('');
+function act(p){const k=p.key;
+if(k==='book')show('<h4>'+bk[p.i][0]+'</h4><p>'+bk[p.i][1]+'</p>');
+else if(k==='lamp'){lamp();show('<h4>Lamp '+(lit?'on':'off')+'</h4><p style="color:var(--muted)">Most of my best work happens late at night.</p>')}
+else if(k==='laptop')show('<h4>Projects</h4>'+projects.map(x=>'<div class="proj"><b>'+x.t+'</b><br><small>'+x.s+'</small><br>'+x.d+'</div>').join(''));
+else if(k==='board')show(gh());
+else if(k==='shelf')show('<h4>Bookshelf</h4><p>Click an individual book to see what I took from it.</p>');
+else if(k==='win')show('<h4>The window</h4><p style="color:var(--muted)">'+CONTENT.windowNote+'</p>');
+else if(k==='pig')show(pigH());
+else if(k==='cert')show('<h4>Certificate in progress</h4><p><b>Bloomberg financial fundamentals</b><br><span style="color:var(--muted)">70% complete, finishing by the end of this month.</span></p><div class="prog" style="height:10px"><i style="width:70%"></i></div>');
+else if(k==='bin')show('<h4>The dustbin</h4><p style="color:var(--muted)">An old plan I crumpled up. Tap it open:</p><div class="paper" id="pp">📄 Click to unfold…</div>')}
+P.addEventListener('click',e=>{if(e.target.id==='pp')e.target.innerHTML='<b>My old plan ('+CONTENT.oldPlan.year+'):</b><br><s>'+CONTENT.oldPlan.plan+'</s><br><br><b>What changed:</b> '+CONTENT.oldPlan.change;const g=e.target.closest('.goal');if(g){const item=goals[g.dataset.i];item.d^=1;g.classList.toggle('done',!!item.d);g.setAttribute('aria-checked',String(!!item.d))}});
+P.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.goal,[role="button"]')){e.preventDefault();e.target.click()}});
+(function loop(t){requestAnimationFrame(loop);led(t||0);pig.scale.lerp(one,.12);R.render(sc,cam)})();
+const tk=[['NIFTY 50',24850],['SENSEX',81400],['BANKNIFTY',53200],['USD/INR',83.9],['GOLD',72300],['BRENT',78.4],['YOU-FIN',100]],ch=tk.map(()=>Math.random()*2-.6);
+function tape(){tk.forEach((x,i)=>ch[i]+=(Math.random()-.48)*.3);ch[6]=Math.abs(ch[6])+.4;const h=tk.map((x,i)=>{const c=ch[i],u=c>=0;return '<span style="padding:0 22px">'+x[0]+' <b>'+(x[1]*(1+c/100)).toLocaleString('en-IN',{maximumFractionDigits:2})+'</b> <span class="'+(u?'up':'dn')+'">'+(u?'▲':'▼')+' '+Math.abs(c).toFixed(2)+'%</span></span>'}).join('');tp.innerHTML=h+h}
+
+
+(function(){const c=hc,x=c.getContext('2d');let n=0,d=[],p=50;for(let i=0;i<44;i++){const o=p,cl=p+(Math.random()-.4)*8+.6;d.push({o,c:cl,h:Math.max(o,cl)+Math.random()*4,l:Math.min(o,cl)-Math.random()*4});p=cl}
+const fit=()=>{c.width=c.offsetWidth*2;c.height=c.offsetHeight*2};fit();addEventListener('resize',fit);const mn=Math.min(...d.map(k=>k.l)),mx=Math.max(...d.map(k=>k.h));
+(function f(){requestAnimationFrame(f);x.clearRect(0,0,c.width,c.height);if(n<d.length)n+=.25;const w=c.width/d.length;for(let i=0;i<Math.min(n,d.length);i++){const k=d[i],y=v=>c.height*(.85-(v-mn)/(mx-mn)*.7);x.strokeStyle=x.fillStyle=k.c>=k.o?'#34d399':'#f87171';x.lineWidth=2;x.beginPath();x.moveTo(i*w+w/2,y(k.h));x.lineTo(i*w+w/2,y(k.l));x.stroke();x.fillRect(i*w+w*.2,y(Math.max(k.o,k.c)),w*.6,Math.max(3,Math.abs(y(k.o)-y(k.c))))}})()})();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('section,.col,.card:not(#panel),.equity').forEach(e=>{e.classList.add('rv');io.observe(e)});
+const io2=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io2.unobserve(e.target);const b=e.target,t=parseFloat(b.textContent),dec=b.textContent.includes('.');let v=0;const s=setInterval(()=>{v+=t/30;if(v>=t){v=t;clearInterval(s)}b.textContent=dec?v.toFixed(2):Math.round(v)},40)}));
+document.querySelectorAll('.stat b').forEach(b=>io2.observe(b));
+(function(){const w=CONTENT.typing;let i=0,j=0,del=0;(function t(){const x=w[i];ty.textContent=x.slice(0,j);if(!del&&j<x.length)j++;else if(!del){del=1;return setTimeout(t,1300)}else if(j>0)j--;else{del=0;i=(i+1)%w.length}setTimeout(t,del?40:85)})()})();
+addEventListener('scroll',()=>tb.style.display=scrollY>700?'block':'none');
+const navLinks=[...document.querySelectorAll('nav a')];
+const navObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(!e.isIntersecting)return;navLinks.forEach(a=>{if(a.getAttribute('href')==='#'+e.target.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')})}),{rootMargin:'-25% 0px -65% 0px'});
+document.querySelectorAll('header#top,section[id]:not(.sec-hidden)').forEach(e=>navObserver.observe(e));
+let sv=CONTENT.piggy.saved;const goal=CONTENT.piggy.goal,fm2=n=>n.toLocaleString('en-IN');
+function pigH(){const p=Math.min(100,sv/goal*100);return '<h4>Piggy bank: '+CONTENT.piggy.title+'</h4><p style="color:var(--muted)">'+CONTENT.piggy.note+'</p><div class="prog" style="height:12px;margin:12px 0"><i style="width:'+p+'%"></i></div><b>₹'+fm2(sv)+'</b> of ₹'+fm2(goal)+' ('+p.toFixed(0)+'%)<br><br><button class="btn" id="coin" style="cursor:pointer">🪙 Add ₹1,000</button>'}
+P.addEventListener('click',e=>{if(e.target.id==='coin'){sv=Math.min(goal,sv+1000);P.innerHTML=pigH();pig.scale.set(1.25,1.35,1.25)}});
+function mkt(){const n=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Kolkata'})),d=n.getDay(),m=n.getHours()*60+n.getMinutes(),wk=d>0&&d<6,op=wk&&m>=555&&m<930;let t;
+if(op){const l=930-m;t='NSE OPEN · closes in '+Math.floor(l/60)+'h '+l%60+'m'}else{let dd=0;if(!(wk&&m<555)){dd=1;while((d+dd)%7==0||(d+dd)%7==6)dd++}const l=dd*1440+555-m;t='NSE CLOSED · opens in '+(l>=1440?Math.floor(l/1440)+'d ':'')+Math.floor(l%1440/60)+'h '+l%60+'m'}
+mk.innerHTML='<span class="dot" style="background:'+(op?'#34d399':'#f87171')+'"></span><span style="color:'+(op?'#34d399':'#f87171')+'">'+t+'</span><span>'+n.toLocaleTimeString('en-GB')+' IST</span>';mk.title='Mon-Fri 9:15-15:30 IST. Exchange holidays not included.'}
+mkt();setInterval(mkt,1000);
+const AS=[['Equity',12,18,'#34d399'],['Debt / Bonds',7,3,'#60a5fa'],['Gold',8,14,'#fbbf24'],['Cash / FD',3.5,0,'#a78bfa']];
+al.innerHTML=AS.map((a,i)=>'<div class="al"><label for="a'+i+'">'+a[0]+'</label><input type="range" min="0" max="100" id="a'+i+'" aria-label="'+a[0]+' allocation"><span id="p'+i+'" style="color:'+a[3]+'"></span></div>').join('');
+const gz=()=>{let u,v=0;while(!v)v=Math.random();u=Math.random();return Math.sqrt(-2*Math.log(v))*Math.cos(6.283*u)};
+let mu=0,sd=0;
+function setRisk(){const r=+risk.value,w=[r*10,(11-r)*7,10,(11-r)*3];w.forEach((x,i)=>document.getElementById('a'+i).value=x);rl.textContent=(r<4?'Conservative':r<8?'Balanced':'Aggressive')+' ('+r+'/10)';calc()}
+function calc(){const raw=AS.map((a,i)=>+document.getElementById('a'+i).value),t=raw.reduce((a,b)=>a+b,0)||1,w=raw.map(x=>x/t);
+w.forEach((x,i)=>document.getElementById('p'+i).textContent=Math.round(x*100)+'%');ab.innerHTML=w.map((x,i)=>'<i style="width:'+x*100+'%;background:'+AS[i][3]+'"></i>').join('');
+mu=w.reduce((a,x,i)=>a+x*AS[i][1],0);const v=w.reduce((a,x,i)=>a+(x*AS[i][2])**2,0)+2*w[0]*w[2]*.1*AS[0][2]*AS[2][2];sd=Math.sqrt(v);
+const V=1e5,f=x=>'₹'+fm2(Math.round(V*(1+x/100)));
+ss.innerHTML=[['Expected return',mu.toFixed(1)+'% p.a.'],['Volatility',sd.toFixed(1)+'%'],['Likely range (±1σ)',f(mu-sd)+' – '+f(mu+sd)],['Expected value',f(mu)]].map(x=>'<div class="sbox"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join('');sim()}
+function sim(){const c=mc,x=c.getContext('2d');c.width=c.offsetWidth*2;c.height=420;x.clearRect(0,0,c.width,c.height);const P2=[];let lo=1e9,hi=0;
+for(let k=0;k<40;k++){let v=1e5;const p=[v];for(let m=0;m<12;m++){v*=Math.max(.2,1+mu/1200+sd/100/Math.sqrt(12)*gz());p.push(v)}P2.push(p);lo=Math.min(lo,...p);hi=Math.max(hi,...p)}
+const X=i=>20+i*(c.width-40)/12,Y=v=>400-(v-lo)/(hi-lo||1)*380;x.strokeStyle='#ffffff22';x.beginPath();x.moveTo(20,Y(1e5));x.lineTo(c.width-20,Y(1e5));x.stroke();
+P2.forEach(p=>{x.strokeStyle=p[12]>=1e5?'#34d39966':'#fb923c66';x.lineWidth=2;x.beginPath();p.forEach((v,i)=>i?x.lineTo(X(i),Y(v)):x.moveTo(X(i),Y(v)));x.stroke()});
+const e=P2.map(p=>p[12]).sort((a,b)=>a-b);sr.textContent='Worst ₹'+fm2(Math.round(e[0]))+' · Median ₹'+fm2(Math.round(e[20]))+' · Best ₹'+fm2(Math.round(e[39]))}
+AS.forEach((a,i)=>document.getElementById('a'+i).oninput=calc);risk.oninput=setRisk;run.onclick=sim;setRisk();
+(function(){const L=[...document.querySelectorAll('nav a')],S=L.map(a=>document.querySelector(a.getAttribute('href')));function u(){let c=0;S.forEach((e,i)=>{if(e&&e.getBoundingClientRect().top<140)c=i});L.forEach((a,i)=>i==c?a.setAttribute('aria-current','location'):a.removeAttribute('aria-current'))}addEventListener('scroll',u,{passive:true});u()})();
+(function(){const T=document.createElement('div');T.id='toast';document.body.appendChild(T);let h;
+function toast(m){T.textContent=m;T.style.opacity=1;clearTimeout(h);h=setTimeout(()=>{T.style.opacity=0},5000)}
+function copy(t){try{navigator.clipboard.writeText(t)}catch(e){const i=document.createElement('textarea');i.value=t;document.body.appendChild(i);i.select();try{document.execCommand('copy')}catch(_){}i.remove()}}
+document.querySelectorAll('a.copy-only').forEach(a=>a.addEventListener('click',e=>{const m=a.href.indexOf('mailto')==0,t=m?CONTENT.email:CONTENT.linkedin,framed=window.self!==window.top;copy(t);if(framed)e.preventDefault();toast((m?'Email address copied: ':'LinkedIn link copied: ')+t+(framed?(m?'. Paste it into your mail app.':'. Paste it into your browser.'):''))}));})();
+</script></body></html>
